@@ -1,1 +1,4 @@
-# Probability-Theory
+## Моделирование случайной величины
+![alt-текст](https://github.com/mavikulov/Probability-Theory/raw/main/Задание.png "Текст заголовка логотипа 1")
+* Дискретная случайная величина 
+* Геометрическое распределение
