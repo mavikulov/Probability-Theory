@@ -88,13 +88,16 @@ class GUI:
         self.ax.plot((-2, 1), (0, 0), color='red', linewidth=2)
         self.ax.plot((-2, 1), (0, 0), color='blue', linewidth=2)
         for i in range(len(solution.series) - 1):
-            self.ax.plot((solution.series[i][0], solution.series[i + 1][0]), (solution.sums[i], solution.sums[i]),
-                         color='red', linewidth=2)
             self.ax.plot((solution.series[i][0], solution.series[i + 1][0]), (solution.prefix_sums[i],
                           solution.prefix_sums[i]), color='blue', linewidth=2)
 
-        self.ax.plot((solution.series[-1][0], solution.series[-1][0] + 2), (1, 1), color='red', linewidth=2, label='F(x)')
-        self.ax.plot((solution.series[-1][0], solution.series[-1][0] + 2), (1, 1), color='blue', linewidth=2, label='F^(x)')
+        for i in range(1, 30):
+            self.ax.plot((i, i + 1), (solution.sums[i - 1], solution.sums[i - 1]), color='red', linewidth=2)
+        self.ax.plot((solution.series[-1][0], solution.series[-1][0] + 32), (1, 1), color='blue', linewidth=2, label='F^(x)')
+
+        self.ax.plot((-3, 1), (0, 0), color='red', linewidth=2, label='F(x)')
+        if solution.series[-1][0] > 30:
+            self.ax.plot((31, solution.series[-1][0] + 2), (1, 1))
 
         self.ax.grid(True)
         self.ax.legend()
@@ -106,7 +109,7 @@ class GUI:
         max_deviation_label = Label(self.master, text=f"Величина max|n_j / n - P(n = y_j)| = {max_deviation}",
                                     font="Consolas 11", background="#7FFFD4")
         label.place(x=0, y=570)
-        max_deviation_label.place(x=0,y=600)
+        max_deviation_label.place(x=0, y=600)
 
 
 ROOT = Tk()

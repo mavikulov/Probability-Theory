@@ -1,6 +1,7 @@
 from collections import Counter
 import random
 import math
+import matplotlib.pyplot as plt
 
 
 class Solution:
@@ -12,6 +13,11 @@ class Solution:
         self.sequence_length = [1] * self.n
         self.cnt = {}
         self.q = 1 - self.p
+        self.series = None
+        self.sums = None
+        self.omegas = None
+        self.prefix_sums = None
+        self.diff = None
 
     def first_task(self):
         for i in range(self.n):
@@ -48,12 +54,11 @@ class Solution:
 
     def generate_data_for_plot(self):
         q = 1 - self.p
-        self.sums = [0] * len(self.series)
+        self.sums = [0] * 40
         self.sums[0] = self.p
-        for i in range(1, len(self.series) - 1):
+        for i in range(1, 40 - 1):
             self.sums[i] = self.sums[i - 1] + self.p * q**i
         self.sums[-1] = 1
-
         self.omegas = []
         for _, n_i in self.series:
             self.omegas.append(n_i / self.n)
@@ -74,3 +79,17 @@ if __name__ == '__main__':
     answer = solution.first_task()
     solution.second_task()
     solution.generate_data_for_plot()
+    print(solution.series)
+    print(solution.sums)
+    print(solution.prefix_sums)
+    plt.step((-2, 1), (0, 0), color='red', linewidth=2)
+    plt.step((-2, 1), (0, 0), color='blue', linewidth=2)
+
+    for i in range(1, 20):
+        plt.step((i, i + 1), (solution.sums[i], solution.sums[i]), color='red', linewidth=2)
+    plt.step((solution.series[-1][0], solution.series[-1][0] + 2), (1, 1), color='red', linewidth=2, label='F(x)')
+    plt.step((solution.series[-1][0], solution.series[-1][0] + 2), (1, 1), color='blue', linewidth=2, label='F^(x)')
+
+    plt.grid(True)
+    plt.legend()
+    plt.show()
